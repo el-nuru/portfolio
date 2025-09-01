@@ -1,34 +1,23 @@
-# This is a basic workflow to help you get started with Actions
+name: NotionJAM
 
-name: NGJam
-
-# Controls when the workflow will run
 on:
   schedule:
-    - cron: "0 21 * * *" # daily
+    - cron: "0 21 * * *"
   push:
     branches: [master, main]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       - name: notion-jam
         uses: victornpb/notion-jam@v0.0.10
         with:
           NOTION_SECRET: ${{ secrets.NGJ_SECRET }}
-          NOTION_DATABASE: 2614d1767970801c8ab5f10b1ddac9fc
+          NOTION_DATABASE: https://www.notion.so/2614d1767970801c8ab5f10b1ddac9fc
           FILTER_PROP: Status
           FILTER_VALUES: Published
           CONVERT_PROP_CASE: snake
@@ -39,7 +28,7 @@ jobs:
           DOWNLOAD_IMAGE_TIMEOUT: 30
           SKIP_DOWNLOADED_IMAGES: true
           DOWNLOAD_FRONTMATTER_IMAGES: true
-      
+
       - name: Save changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
